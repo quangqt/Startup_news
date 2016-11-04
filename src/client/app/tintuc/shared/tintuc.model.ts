@@ -1,7 +1,5 @@
-    import {ModelBase} from './model.base';
-
-
-    export class TinTuc extends ModelBase {
+  export class TinTuc{
+        id:number;
         IDDanhMucSite:number;
         TieuDe:string;
         MoTa:string;

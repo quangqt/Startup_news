@@ -23,18 +23,18 @@ export class TinTucRepo extends RepoBase {
 
            return pResult.then(result => {
             let TinTucs: TinTuc[] = result.rows.map(r => {
-                // let TinTuc = new TinTucModel();
-                // TinTuc.IDTinTuc=r.idtintuc;
-                // TinTuc.IDDanhMucSite = r.iddanhmucsite;
-                // TinTuc.TieuDe = r.tieude;
-                // TinTuc.MoTa=r.mota;
-                // TinTuc.NoiDung=r.noidung;
-                // TinTuc.ThoiGianDangTin=r.thoigiandangtin;
-                // TinTuc.URlNews=r.urlnew;
-                // TinTuc.URLThumbImage=r.urlthumbimage;
-                // TinTuc.URLImage=r.urlimage;
+                let tintuc = new TinTuc();
+                tintuc.id = r.IDTinTuc;
+                tintuc.IDDanhMucSite = r.IDDanhMucSite;
+                tintuc.TieuDe = r.TieuDe;
+                tintuc.MoTa=r.MoTa;
+                tintuc.NoiDung=r.NoiDung;
+                tintuc.ThoiGianDangTin=r.ThoiGianDangTin;
+                tintuc.URLNews=r.URLNews;
+                tintuc.URLThumbImage=r.URLThumbImage;
+                tintuc.URLImage=r.URLImage;
                 // console.log(r.idtintuc)
-                return result.rows;
+                return tintuc;
             });
             return TinTucs;
         })
@@ -43,14 +43,25 @@ export class TinTucRepo extends RepoBase {
                 return null;
             });
     }
-    public count(option): Promise<number> {
-        let queryText = 'select count(*) as abc from test.books';
+    public getOne(option): Promise<TinTuc> {
+        let queryText = 'SELECT * FROM public."TinTuc" WHERE IDTinTuc=id';
 
         console.info('Excute: ' + queryText);
 
-        return this._pgPool.query(queryText)
+        return this._pgPool.query(queryText, [option.id, option.name])
             .then(result => {
-                return result.rows[0].abc
-            })
+                let tintuc = new TinTuc();
+                tintuc.id = result.rows[0].IDTinTuc;
+                tintuc.IDDanhMucSite = result.rows[0].IDDanhMucSite;
+                tintuc.TieuDe=result.rows[0].TieuDe;
+                tintuc.MoTa=result.rows[0].MoTa;
+                tintuc.NoiDung=result.rows[0].Mota;
+                tintuc.URLNews=result.rows[0].URLNews;
+                tintuc.URLThumbImage=result.rows[0].URLThumbImage;
+                tintuc.URLImage=result.rows[0].URLImage;
+                tintuc.ThoiGianDangTin=result.rows[0].ThoiGianDangTin;
+                return tintuc;
+            });
     }
+
 }
